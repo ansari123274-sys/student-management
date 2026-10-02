@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="main" style="margin-left: 0; width: 100%;">
+
+    <div class="card">
+
+        <h1>Student Details</h1>
+
+        <br>
+
+        <p>
+            <strong>Student ID:</strong>
+            {{ student.id }}
+        </p>
+
+        <p>
+            <strong>Name:</strong>
+            {{ student.name }}
+        </p>
+
+        <p>
+            <strong>Age:</strong>
+            {{ student.age }}
+        </p>
+
+        <p>
+            <strong>Course:</strong>
+            {{ student.course }}
+        </p>
+
+        <p>
+            <strong>Roll Number:</strong>
+            {{ student.roll_no }}
+        </p>
+
+        <br>
+
+        <a href="/">
+            <button class="primary-btn">
+                Back to Dashboard
+            </button>
+        </a>
+
+        <a href="/edit/{{ student.id }}">
+            <button class="edit-btn">
+                Edit Student
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

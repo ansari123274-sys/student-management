@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>SMS</h2>
+
+        <p class="logo-text">
+            Student Management
+        </p>
+
+        <nav>
+
+            <a href="/">
+                🏠 Dashboard
+            </a>
+
+            <a href="#add-student">
+                ➕ Add Student
+            </a>
+
+            <a href="#students">
+                👨‍🎓 Students
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main -->
+
+    <main class="main">
+
+        <!-- Header -->
+
+       <div class="top">
+
+    <div>
+
+        <h1>Dashboard</h1>
+
+        <p>Manage your students easily</p>
+
+    </div>
+
+    <a href="/logout" class="logout-btn">
+        Logout
+    </a>
+
+</div>
+
+
+        <!-- Statistics -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <p>Total Students</p>
+
+                <h2>
+                    {{ total_students }}
+                </h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <p>System</p>
+
+                <h2>
+                    Active
+                </h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <p>Database</p>
+
+                <h2>
+                    SQLite
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- Add Student -->
+
+        <div class="card" id="add-student">
+
+            <h2>
+                Add New Student
+            </h2>
+
+            <form action="/add" method="POST">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label>
+                            Student Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            name="age"
+                            placeholder="Enter age"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Course
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course"
+                            placeholder="Enter course"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Roll Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="roll_no"
+                            placeholder="Enter roll number"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    type="submit"
+                >
+                    + Add Student
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="card">
+
+            <h2>
+                Search Students
+            </h2>
+
+            <form
+                action="/"
+                method="GET"
+                class="search-form"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by name, roll number or course"
+                    value="{{ search }}"
+                >
+
+                <button
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Student List -->
+
+        <div class="card" id="students">
+
+            <h2>
+                Student List
+            </h2>
+
+
+            {% if students %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Course</th>
+                            <th>Roll Number</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for student in students %}
+
+                        <tr>
+
+                            <td>
+                                {{ student.id }}
+                            </td>
+
+                            <td>
+                                {{ student.name }}
+                            </td>
+
+                            <td>
+                                {{ student.age }}
+                            </td>
+
+                            <td>
+                                {{ student.course }}
+                            </td>
+
+                            <td>
+                                {{ student.roll_no }}
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <!-- VIEW -->
+
+                                <a
+                                    href="/student/{{ student.id }}"
+                                    class="action-btn view-btn"
+                                >
+                                    View
+                                </a>
+
+
+                                <!-- EDIT -->
+
+                                <a
+                                    href="/edit/{{ student.id }}"
+                                    class="action-btn edit-btn"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <!-- DELETE -->
+
+                                <a
+                                    href="/delete/{{ student.id }}"
+                                    class="action-btn delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this student?')"
+                                >
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+                <p>
+                    No students found.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
